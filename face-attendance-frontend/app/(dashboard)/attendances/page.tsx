@@ -24,7 +24,7 @@ import { getAttendances } from '@/actions/attendance.actions'
  */
 function formatCheckinTime(dateString: string): string {
   if (!dateString) return 'N/A'
-  return new Date(dateString).toLocaleString(undefined, {
+  return new Date(dateString).toLocaleString('id-ID', {
     year: 'numeric',
     month: 'short',
     day: 'numeric',

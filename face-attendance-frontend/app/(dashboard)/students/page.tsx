@@ -29,7 +29,7 @@ import { DeleteStudentButton } from './components/DeleteStudentButton'
  */
 function formatCreatedAt(dateString: string): string {
   if (!dateString) return 'N/A'
-  return new Date(dateString).toLocaleString(undefined, {
+  return new Date(dateString).toLocaleString('id-ID', {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
