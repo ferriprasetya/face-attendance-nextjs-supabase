@@ -2,6 +2,8 @@
 
 import { createClient } from '@/lib/supabase/server'
 import { ActionResult } from '@/lib/types/general.types'
+import { Student } from '@/lib/types/student.types'
+import { revalidatePath } from 'next/cache'
 
 /**
  * Server Action to create a new student record.
@@ -44,6 +46,57 @@ export async function createStudent(
     return {
       success: false,
       message: `Failed to create student: ${error.message}`,
+    }
+  }
+}
+
+export async function getStudents(): Promise<Student[]> {
+  const supabase = await createClient()
+
+  try {
+    const { data: students, error } = await supabase
+      .from('students')
+      .select('id, name, created_at')
+      .order('created_at', { ascending: false })
+
+    if (error) {
+      throw error
+    }
+
+    return students
+  } catch (error) {
+    throw error
+  }
+}
+
+export async function deleteStudent(
+  id: string,
+  name: string,
+): Promise<ActionResult> {
+  try {
+    const supabase = await createClient()
+    const { error } = await supabase
+      .from('students')
+      .delete()
+      .eq('id', id)
+      .select()
+
+    if (error) {
+      throw new Error(
+        `Failed to delete student with name ${name}: ${error.message}`,
+      )
+    }
+
+    revalidatePath('/students')
+
+    return {
+      success: true,
+      message: `Student with name ${name} deleted successfully.`,
+    }
+  } catch (error: any) {
+    return {
+      success: false,
+      message: `Failed to delete student with name ${name}: ${error.message}`,
     }
   }
 }

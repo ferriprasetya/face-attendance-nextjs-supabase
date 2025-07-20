@@ -16,6 +16,8 @@ import {
 } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { redirect } from 'next/navigation'
+import { toast } from 'sonner'
 
 /**
  * A page component for creating a new student record,
@@ -89,21 +91,49 @@ export default function CreateStudentPage() {
       })
       return
     }
+    let isSuccess = false
 
     setFormMessage(null) // Clear previous messages
+    toast.promise(
+      new Promise((resolve) =>
+        startTransition(() => {
+          // Call the server action and forward its result
+          resolve(createStudent(name, embedding))
+        }),
+      ),
+      {
+        loading: `Creating student ...`,
+        success: (result: any) => {
+          setName('')
+          setEmbedding(null)
+          setIsFaceSaved(false)
+          isSuccess = true
+          return result.message // Success message from server action
+        },
+        error: (result: any) => {
+          return result.message // Error message from server action
+        },
+        finally: () => {
+          if (isSuccess) {
+            redirect('/students') // Redirect on success
+          }
+        },
+      },
+    )
 
-    startTransition(async () => {
-      const result = await createStudent(name, embedding)
-      if (result.success) {
-        setFormMessage({ type: 'success', text: result.message })
-        // Reset form on success
-        setName('')
-        setEmbedding(null)
-        setIsFaceSaved(false)
-      } else {
-        setFormMessage({ type: 'error', text: result.message })
-      }
-    })
+    // startTransition(async () => {
+    //   const result = await createStudent(name, embedding)
+    //   if (result.success) {
+    //     setFormMessage({ type: 'success', text: result.message })
+    //     // Reset form on success
+    //     setName('')
+    //     setEmbedding(null)
+    //     setIsFaceSaved(false)
+    //     redirect('/students')
+    //   } else {
+    //     setFormMessage({ type: 'error', text: result.message })
+    //   }
+    // })
   }
 
   // --- DERIVED STATE ---
