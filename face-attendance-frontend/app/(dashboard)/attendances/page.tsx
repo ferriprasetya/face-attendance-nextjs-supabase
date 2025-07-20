@@ -24,14 +24,15 @@ import { getAttendances } from '@/actions/attendance.actions'
  */
 function formatCheckinTime(dateString: string): string {
   if (!dateString) return 'N/A'
-  return new Date(dateString).toLocaleString('id-ID', {
+  return new Intl.DateTimeFormat('id-ID', {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
     hour: 'numeric',
     minute: '2-digit',
     hour12: false,
-  })
+    timeZone: 'Asia/Jakarta'
+  }).format(new Date(dateString))
 }
 
 /**
