@@ -105,12 +105,16 @@ const FaceDetector: React.FC<FaceDetectorProps> = ({
 
   // Effect to handle the detection interval
   useEffect(() => {
-    if (isLoadingModels || isPaused) {
-      // When paused or loading, ensure the canvas is clear.
+    if (isLoadingModels) {
+      // When loading, ensure the canvas is clear.
       const canvas = canvasRef.current
       if (canvas) {
         canvas.getContext('2d')?.clearRect(0, 0, canvas.width, canvas.height)
       }
+      return
+    }
+
+    if (isPaused) {
       return
     }
 
@@ -150,11 +154,11 @@ const FaceDetector: React.FC<FaceDetectorProps> = ({
     const detectionInterval = setInterval(handleDetection, 500)
 
     return () => clearInterval(detectionInterval)
-  }, [isLoadingModels, isPaused, onFaceDetected])
+  }, [isLoadingModels, onFaceDetected])
 
   return (
-    <div className='mx-auto flex w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white p-6 shadow-lg dark:border-gray-700 dark:bg-gray-800'>
-      <div className='relative mb-4 aspect-video w-full overflow-hidden rounded-lg shadow-inner'>
+    <div className='mx-auto flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white p-6 shadow-lg dark:border-gray-700 dark:bg-gray-800'>
+      <div className='relative mb-4 h-full w-full overflow-hidden rounded-lg shadow-inner'>
         {/* The Webcam component is hidden when paused, replaced by the frozen image */}
         <Webcam
           ref={webcamRef}

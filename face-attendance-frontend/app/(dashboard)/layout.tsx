@@ -19,7 +19,7 @@ export default function DashboardLayout({
         <header className='flex h-16 shrink-0 items-center gap-2'>
           <SidebarTrigger className='ml-1 cursor-pointer' size='lg' />
         </header>
-        <main className='px-8'>{children}</main>
+        <main className='h-full px-8'>{children}</main>
       </SidebarInset>
     </SidebarProvider>
   )
