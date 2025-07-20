@@ -1,0 +1,11 @@
+# netlify.toml (at the root of your repo)
+
+[build]
+  # Base directory for the build
+  base = "face-attendance-frontend"
+
+  # Build command for Next.js
+  command = "next build"
+
+  # The output folder, relative to the base directory
+  publish = ".next"
