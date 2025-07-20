@@ -1,7 +1,4 @@
-import Link from 'next/link'
-
 // Import Shadcn UI Components
-import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
@@ -17,7 +14,6 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { PlusCircle } from 'lucide-react'
 import { Attendance } from '@/lib/types/attendance.types'
 import { getAttendances } from '@/actions/attendance.actions'
 
