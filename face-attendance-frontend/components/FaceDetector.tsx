@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import Webcam from 'react-webcam'
 import * as faceapi from 'face-api.js'
+import Image from 'next/image'
 
 /**
  * @interface FaceDetectorProps
@@ -154,7 +155,7 @@ const FaceDetector: React.FC<FaceDetectorProps> = ({
     const detectionInterval = setInterval(handleDetection, 500)
 
     return () => clearInterval(detectionInterval)
-  }, [isLoadingModels, onFaceDetected])
+  }, [isLoadingModels, onFaceDetected, isPaused])
 
   return (
     <div className='mx-auto flex h-full w-full flex-col items-center justify-center rounded-xl border border-gray-200 bg-white p-6 shadow-lg dark:border-gray-700 dark:bg-gray-800'>
@@ -169,7 +170,7 @@ const FaceDetector: React.FC<FaceDetectorProps> = ({
         />
         {/* Display the frozen image when paused */}
         {frozenImageSrc && (
-          <img
+          <Image
             src={frozenImageSrc}
             alt='Paused webcam feed'
             className='absolute top-0 left-0 h-full w-full object-cover'

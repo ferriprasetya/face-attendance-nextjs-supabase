@@ -1,5 +1,4 @@
 import { AppSidebar } from '@/components/layouts/AppSidebar'
-import { Separator } from '@/components/ui/separator'
 import {
   SidebarInset,
   SidebarProvider,
