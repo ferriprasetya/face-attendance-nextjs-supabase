@@ -63,8 +63,8 @@ Make sure you have the following tools installed on your system:
 
 1.  **Clone the Repository**
     ```bash
-    git clone [https://github.com/your-username/face-attendance-management-system.git](https://github.com/your-username/face-attendance-management-system.git)
-    cd face-attendance-management-system
+    git clone [https://github.com/ferriprasetya/face-attendance-nextjs-supabase.git](https://github.com/ferriprasetya/face-attendance-nextjs-supabase.git)
+    cd face-attendance-nextjs-supabase
     ```
 
 2.  **Set Up the Backend (Supabase)**
